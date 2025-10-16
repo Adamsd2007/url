@@ -1,0 +1,18 @@
+# Use PHP with Apache
+FROM php:8.2-apache
+
+# Enable common PHP extensions
+RUN docker-php-ext-install mysqli pdo pdo_mysql
+
+# Copy app files to Apache web root
+COPY . /var/www/html/
+
+# Set permissions
+RUN chown -R www-data:www-data /var/www/html
+RUN chmod -R 755 /var/www/html
+
+# Enable Apache rewrite module (needed for frameworks like Laravel or short URLs)
+RUN a2enmod rewrite
+
+# Expose port 80
+EXPOSE 80
